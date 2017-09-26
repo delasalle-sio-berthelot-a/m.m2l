@@ -12,5 +12,5 @@ echo 'T un ouf';
 
 echo 'pk ?';
 
-echo 'pck l ';
+echo 'pck l a';
 ?>
