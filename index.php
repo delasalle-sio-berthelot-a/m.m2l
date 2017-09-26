@@ -7,7 +7,7 @@
 
 // Ce fichier est appelé par tous les liens internes, et par la validation de tous les formulaires
 // il est appelé avec un paramètre action qui peut prendre les valeurs suivantes :
-
+   
 //    index.php?action=Connecter              : pour afficher la page de connexion
 //    index.php?action=Menu                   : pour afficher le menu
 //    index.php?action=DemanderMdp            : pour afficher la page "mot de passe oublié"
