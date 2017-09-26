@@ -6,6 +6,6 @@ echo 'on demande a sortir plus tot si c\'est fini ? ';
 
 echo 'T un ouf';
 
-echo 'pk ?';
+echo 'pk ? ';
 
 ?>
