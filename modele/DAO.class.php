@@ -161,9 +161,21 @@ class DAO
 		return $ok;
 	}
 
+	public function envoyerMdp($unUtilisateur,$newPassword)
+	{
+	    global $adr_mail_sender;
+	    //si l'adr n'est pas dans la base
+	    if ( ! $this->existeUtilisateur($unUtilisateur) ) return false;
+	    //recherche adr mail
+	    $adrmail = $this->getUtilisateur($unUilisateur)->getEmail();
+	    //envoi du mail
+	    $sujet = "Nouveau mot de passe";
+	    $message = "Votre mot de passe vien d'être modifié, votre nouveau mot de passe est : " . $newPassword;
+	    $sendMail = Outils::envoyerMail($adrmail, $sujet, $message, $adr_mail_sender);
+	    return $sendmail; 
+	}
 	
 	// fournit true si il existe une réservation , false sinon
-
 	public function existeReservation($idReservation)
 	{	// préparation de la requete de recherche
 	    $txt_req = "Select count(*) from mrbs_entry where id = :idReservation";
@@ -269,6 +281,10 @@ class DAO
 		return $lesReservations;
 	}
 
+	public function getLesSalles($nomUser)
+	{
+	    
+	}
 		
 	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 	// renvoie "utilisateur" ou "administrateur" si authentification correcte, "inconnu" sinon
