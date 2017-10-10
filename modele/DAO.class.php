@@ -155,7 +155,7 @@ class DAO
 		$req->bindValue("level", utf8_decode($unUtilisateur->getLevel()), PDO::PARAM_STR);
 		$req->bindValue("name", utf8_decode($unUtilisateur->getName()), PDO::PARAM_STR);
 		$req->bindValue("password", utf8_decode(md5($unUtilisateur->getPassword())), PDO::PARAM_STR);
-		$req->bindValue("email", utf8_decode($unUtilisateur->getEmail()), PDO::PARAM_STR);
+		$req->bindValue("email", utf8_decode($unUtilisateur->getEmail()), PDO::PARAM_STR); 
 		// exécution de la requete
 		$ok = $req->execute();
 		return $ok;
@@ -175,8 +175,29 @@ class DAO
 	    return $sendmail; 
 	}
 	
+
+	// modifierMdpUser    : enregistre le nouveau mot de passe de l'utilisateur dans la bdd après l'avoir hashé en MD5
+	public function modifierMdpUser($nomUser, $mdpUser, $NewMdp){
+	    // préparation de la requete
+	    $newMdp=md5($mdpUser);
+	    $txt_req = "Update mrbs_users";
+	    $txt_req = $txt_req . "set password = :NewMdp";
+	    $txt_req = $txt_req . "where name = :nomUser and password = :mdpUserCrypte";
+	    $req = $this->cnx->prepare($txt_req);
+	    // liaison de la requête et de ses paramètres
+    	$req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
+    	$req->bindValue("mdpUserCrypte", md5($mdpUser), PDO::PARAM_STR);
+    	//$req->bindValue("NewmdpUserCrypte", md5($NewMdp), PDO::PARAM_STR);
+       	// exécution de la requete
+    	$ok = $req->execute();
+    	return $ok;
+	}
+	
 	// fournit true si il existe une réservation , false sinon
-//Thomas
+
+	
+
+
 	public function existeReservation($idReservation)
 	{	// préparation de la requete de recherche
 	    $txt_req = "Select count(*) from mrbs_entry where id = :idReservation";
@@ -351,6 +372,68 @@ class DAO
 	        return null;
 	}
 	
+<<<<<<< HEAD
+	   
+	public function getUtilisateur($nomUser)
+	{	// préparation de la requête de recherche
+	    
+	    $txt_req = "Select * from mrbs_users where name = :nomUser";
+	    $req = $this->cnx->prepare($txt_req);
+	    // liaison de la requête et de ses paramètres
+	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
+	    // extraction des données
+	    $req->execute();
+	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
+	    // traitement de la réponse
+	   
+	    
+	    if ($uneLigne)
+	     {
+	      
+	        $unId = utf8_encode($uneLigne->id);
+	        $unLevel = utf8_encode($uneLigne->level);
+	        $unName = utf8_encode($uneLigne->name);
+	        $unPassword = utf8_encode($uneLigne->password);
+	        $unEmail = utf8_encode($uneLigne->email);
+	        
+	        
+	        $unUtilisateur = new Utilisateur($unId, $unLevel, $unName, $unPassword, $unEmail);
+	     
+	        
+	     }
+	     else
+	     {
+	          $unUtilisateur = null;
+	     }
+	      
+	    return $unUtilisateur;
+	      
+	            
+	            
+	}
+	
+	
+	public function supprimerUtilisateur($nomUser)
+	{	
+	    // préparation de la requête de recherche
+	    $txt_req = "";
+	    $req = $this->cnx->prepare($txt_req);
+	    // liaison de la requête et de ses paramètres
+	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
+	    // extraction des données
+	    $req->execute();
+	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
+	    // traitement de la réponse
+	   
+	    // libère les ressources du jeu de données
+	    $req->closeCursor();
+	    // fourniture de la réponse
+	    return $reponse;
+	}	
+	
+	
+	
+=======
 	// annulerReservation            : enregistre l'annulation de réservation dans la bdd
 	// modifié par Antoine le 10/10/17
 	public function annulerReservation($idReservation){
@@ -362,6 +445,7 @@ class DAO
 	    $ok = $req->execute();
 	    return $ok;
 	}
+>>>>>>> branch 'master' of https://github.com/delasalle-sio-berthelot-a/m.m2l.git
 	
 	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 	// renvoie "utilisateur" ou "administrateur" si authentification correcte, "inconnu" sinon
