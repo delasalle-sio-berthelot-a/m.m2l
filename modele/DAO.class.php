@@ -176,7 +176,7 @@ class DAO
 	}
 	
 	// fournit true si il existe une réservation , false sinon
-
+//Thomas
 	public function existeReservation($idReservation)
 	{	// préparation de la requete de recherche
 	    $txt_req = "Select count(*) from mrbs_entry where id = :idReservation";
