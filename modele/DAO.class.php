@@ -163,7 +163,7 @@ class DAO
 
 	
 	// fournit true si il existe une réservation , false sinon
-
+//Thomas
 	public function existeReservation($idReservation)
 	{	// préparation de la requete de recherche
 	    $txt_req = "Select count(*) from mrbs_entry where id = :idReservation";
@@ -272,7 +272,7 @@ class DAO
 		
 	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 	// renvoie "utilisateur" ou "administrateur" si authentification correcte, "inconnu" sinon
-	// modifié par Jim le 5/5/2015
+	// modifié par Thomas le 5/5/2015
 	public function getReservation($idReservation)
 	{	// préparation de la requête de recherche
 	    $txt_req = "Select mrbs_entry.id as id_entry, timestamp, start_time, end_time, room_name, status, digicode";
@@ -309,6 +309,18 @@ class DAO
 	    }
 	    else 
 	        return null;
+	}
+	
+	// annulerReservation            : enregistre l'annulation de réservation dans la bdd
+	// modifié par Antoine le 10/10/17
+	public function annulerReservation($idReservation){
+	    $txt_req = "Delete From mrbs_entry Where id=:idRes  ";
+	    $req = $this->cnx->prepare($txt_req);
+	    // liaison de la requête et de ses paramètres
+	    $req->bindValue("idRes", utf8_decode($idReservation), PDO::PARAM_STR);
+	    // exécution de la requete
+	    $ok = $req->execute();
+	    return $ok;
 	}
 	
 	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
