@@ -303,9 +303,32 @@ class DAO
 		return $lesReservations;
 	}
 
-	public function getLesSalles($nomUser)
+	public function getLesSalles()
 	{
+	    $txt_req = "SELECT mrbs_room.id, mrbs_room.room_name, mrbs_room.capacity, mrbs_area.area_name";
+	    $txt_req = $txt_req." FROM mrbs_room, mrbs_area";
+	    $txt_req = $txt_req." WHERE mrbs_room.area_id = mrbs_area.id";
+	    $txt_req = $txt_req." ORDER BY mrbs_area.area_name, mrbs_room.room_name";
 	    
+	    $req = $this->cnx->prepare($txt_req);
+	    $req->execute();
+	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
+	    
+	    $lesSalles =array();
+	    
+	    while ($uneLigne)
+	    {
+	        $unId = utf8_encode($uneLigne->id);
+	        $unRoomName = utf8_encode($uneLigne->room_name);
+	        $unCapacity = utf8_encode($uneLigne->capacity);
+	        $unAreaName = utf8_encode($uneLigne->area_name);
+	        
+	        $uneSalle = new Salle($unId, $unRoomName, $unCapacity, $unAreaName);
+	        $lesSalles[] = $uneSalle;
+	        $uneLigne = $req->fetch(PDO::FETCH_OBJ);	        
+	    }
+	    $req->closeCursor();
+	    return $lesSalles;
 	}
 		
 	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
