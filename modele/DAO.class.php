@@ -352,8 +352,9 @@ class DAO
 	
 	
 	public function supprimerUtilisateur($nomUser)
-	{	// préparation de la requête de recherche
-	    $txt_req = "Select level from mrbs_users where name = :nomUser and password = :mdpUserCrypte and level > 0";
+	{	
+	    // préparation de la requête de recherche
+	    $txt_req = "";
 	    $req = $this->cnx->prepare($txt_req);
 	    // liaison de la requête et de ses paramètres
 	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
