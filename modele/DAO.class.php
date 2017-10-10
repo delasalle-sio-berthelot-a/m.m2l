@@ -155,12 +155,29 @@ class DAO
 		$req->bindValue("level", utf8_decode($unUtilisateur->getLevel()), PDO::PARAM_STR);
 		$req->bindValue("name", utf8_decode($unUtilisateur->getName()), PDO::PARAM_STR);
 		$req->bindValue("password", utf8_decode(md5($unUtilisateur->getPassword())), PDO::PARAM_STR);
-		$req->bindValue("email", utf8_decode($unUtilisateur->getEmail()), PDO::PARAM_STR);
+		$req->bindValue("email", utf8_decode($unUtilisateur->getEmail()), PDO::PARAM_STR); 
 		// exécution de la requete
 		$ok = $req->execute();
 		return $ok;
 	}
 
+	
+	// modifierMdpUser    : enregistre le nouveau mot de passe de l'utilisateur dans la bdd après l'avoir hashé en MD5
+	public function modifierMdpUser($nomUser, $mdpUser, $NewMdp){
+	    // préparation de la requete
+	    $newMdp=md5($mdpUser);
+	    $txt_req = "Update mrbs_users";
+	    $txt_req = $txt_req . "set password = :NewMdp";
+	    $txt_req = $txt_req . "where name = :nomUser and password = :mdpUserCrypte";
+	    $req = $this->cnx->prepare($txt_req);
+	    // liaison de la requête et de ses paramètres
+    	$req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
+    	$req->bindValue("mdpUserCrypte", md5($mdpUser), PDO::PARAM_STR);
+    	//$req->bindValue("NewmdpUserCrypte", md5($NewMdp), PDO::PARAM_STR);
+       	// exécution de la requete
+    	$ok = $req->execute();
+    	return $ok;
+	}
 	
 	// fournit true si il existe une réservation , false sinon
 //Thomas
