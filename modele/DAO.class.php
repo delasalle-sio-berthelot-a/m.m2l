@@ -349,7 +349,7 @@ class DAO
 	        return null;
 	}
 	
-<<<<<<< HEAD
+
 	   
 	public function getUtilisateur($nomUser)
 	{	// préparation de la requête de recherche
@@ -393,24 +393,18 @@ class DAO
 	public function supprimerUtilisateur($nomUser)
 	{	
 	    // préparation de la requête de recherche
-	    $txt_req = "";
+	    $txt_req = "DELETE FROM mrbs_users WHERE name = :nomUser";
 	    $req = $this->cnx->prepare($txt_req);
 	    // liaison de la requête et de ses paramètres
 	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
-	    // extraction des données
-	    $req->execute();
-	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
-	    // traitement de la réponse
-	   
-	    // libère les ressources du jeu de données
-	    $req->closeCursor();
-	    // fourniture de la réponse
-	    return $reponse;
-	}	
+	    // exécution de la requete
+	    $ok = $req->execute();
+	    return $ok;
+	}
 	
 	
 	
-=======
+
 	// annulerReservation            : enregistre l'annulation de réservation dans la bdd
 	// modifié par Antoine le 10/10/17
 	public function annulerReservation($idReservation){
@@ -422,7 +416,7 @@ class DAO
 	    $ok = $req->execute();
 	    return $ok;
 	}
->>>>>>> branch 'master' of https://github.com/delasalle-sio-berthelot-a/m.m2l.git
+
 	
 	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 	// renvoie "utilisateur" ou "administrateur" si authentification correcte, "inconnu" sinon
