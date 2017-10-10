@@ -362,12 +362,7 @@ class DAO
 	    $req->execute();
 	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
 	    // traitement de la réponse
-	    $reponse = "inconnu";
-	    if ($uneLigne)
-	    {	$level = $uneLigne->level;
-	    if ($level == "1") $reponse = "utilisateur";
-	    if ($level == "2") $reponse = "administrateur";
-	    }
+	   
 	    // libère les ressources du jeu de données
 	    $req->closeCursor();
 	    // fourniture de la réponse
