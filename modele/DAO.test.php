@@ -20,7 +20,7 @@ include_once ('DAO.class.php');
 $dao = new DAO();
 
 
-/*
+
 // test de la méthode annulerReservation --------------------------------------------------------
 // pour ce test, utiliser une réservation existante
 // modifié par Jim le 28/9/2015
@@ -36,7 +36,7 @@ if ($laReservation) {
 }
 else
 	echo "<p>La réservation 1 n'existe pas !</p>";
-*/
+
 
 
 /*
@@ -95,17 +95,17 @@ else
 */
 
 
-/*
+
 // test de la méthode envoyerMdp ------------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de envoyerMdp : </h3>";
-$dao->modifierMdpUser("jim", "passe");
-$ok = $dao->envoyerMdp("jim", "passe");
+$dao->modifierMdpUser("simont", "passe");
+$ok = $dao->envoyerMdp("simont", "passe");
 if ($ok)
 	echo "<p>Mail bien envoyé !</p>";
 else
 	echo "<p>Echec lors de l'envoi du mail !</p>";
-*/
+
 
 
 /*
@@ -230,7 +230,7 @@ else
 
 
 
-/*
+
 // test de la méthode modifierMdpUser -------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de modifierMdpUser : </h3>";
@@ -249,7 +249,7 @@ if ($unUtilisateur) {
 }
 else
 	echo "<p>L'utilisateur admin n'existe pas !</p>";
-*/
+
 
 
 
