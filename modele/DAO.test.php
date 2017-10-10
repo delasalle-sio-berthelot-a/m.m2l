@@ -95,7 +95,7 @@ else
 */
 
 
-
+/*
 // test de la méthode envoyerMdp ------------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de envoyerMdp : </h3>";
@@ -105,7 +105,7 @@ if ($ok)
 	echo "<p>Mail bien envoyé !</p>";
 else
 	echo "<p>Echec lors de l'envoi du mail !</p>";
-
+*/
 
 
 /*
@@ -170,7 +170,7 @@ foreach ($lesReservations as $uneReservation)
 */
 
 
-/*
+
 // test de la méthode getLesSalles ----------------------------------------------------------------
 // modifié par Jim le 26/5/2016
 echo "<h3>Test de getLesSalles : </h3>";
@@ -182,7 +182,7 @@ foreach ($lesSalles as $uneSalle)
 {	echo ($uneSalle->getRoom_name());
 	echo ('<br>');
 }
-*/
+
 
 
 // test de la méthode getNiveauUtilisateur --------------------------------------------------------
