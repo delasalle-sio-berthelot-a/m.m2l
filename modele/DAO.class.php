@@ -161,6 +161,29 @@ class DAO
 		return $ok;
 	}
 
+	
+	// fournit true si il existe une réservation , false sinon
+
+	public function existeReservation($idReservation)
+	{	// préparation de la requete de recherche
+	    $txt_req = "Select count(*) from mrbs_entry where id = :idReservation";
+	    $req = $this->cnx->prepare($txt_req);
+	    // liaison de la requête et de ses paramètres
+	    $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+	    // exécution de la requete
+	    $req->execute();
+	    $nbReponses = $req->fetchColumn(0);
+	    // libère les ressources du jeu de données
+	    $req->closeCursor();
+	    
+	    // fourniture de la réponse
+	    if ($nbReponses == 0)
+	        return false;
+	    else
+	        return true;
+	}
+	
+	
 	// fournit true si l'utilisateur ($nomUser) existe, false sinon
 	// modifié par Jim le 5/5/2015
 	public function existeUtilisateur($nomUser)
@@ -246,6 +269,48 @@ class DAO
 		return $lesReservations;
 	}
 
+		
+	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
+	// renvoie "utilisateur" ou "administrateur" si authentification correcte, "inconnu" sinon
+	// modifié par Jim le 5/5/2015
+	public function getReservation($idReservation)
+	{	// préparation de la requête de recherche
+	    $txt_req = "Select mrbs_entry.id as id_entry, timestamp, start_time, end_time, room_name, status, digicode";
+	    $txt_req = $txt_req . " from mrbs_entry, mrbs_room, mrbs_entry_digicode";
+	    $txt_req = $txt_req . " where mrbs_entry.room_id = mrbs_room.id";
+	    $txt_req = $txt_req . " and mrbs_entry.id = mrbs_entry_digicode.id";
+	    $txt_req = $txt_req . " and mrbs_entry.id = :idReservation";
+	    
+	    $req = $this->cnx->prepare($txt_req);
+	    // liaison de la requête et de ses paramètres
+	    $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+	    // exécution de la requete
+	    $req->execute();
+	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
+	    // libère les ressources du jeu de données
+	    
+	    
+	    // fourniture de la réponse
+	    if ($uneLigne)
+	    {    // création d'un objet Reservation
+	        $unId = utf8_encode($uneLigne->id_entry);
+	        $unTimeStamp = utf8_encode($uneLigne->timestamp);
+	        $unStartTime = utf8_encode($uneLigne->start_time);
+	        $unEndTime = utf8_encode($uneLigne->end_time);
+	        $unRoomName = utf8_encode($uneLigne->room_name);
+	        $unStatus = utf8_encode($uneLigne->status);
+	        $unDigicode = utf8_encode($uneLigne->digicode);
+	        
+	        $uneReservation = new Reservation($unId, $unTimeStamp, $unStartTime, $unEndTime, $unRoomName, $unStatus, $unDigicode);
+ 
+	        $req->closeCursor();
+	        
+	        return $uneReservation;
+	    }
+	    else 
+	        return null;
+	}
+	
 	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 	// renvoie "utilisateur" ou "administrateur" si authentification correcte, "inconnu" sinon
 	// modifié par Jim le 5/5/2015
@@ -272,6 +337,7 @@ class DAO
 		return $reponse;
 	}	
 
+	
 	// teste si le digicode saisi ($digicodeSaisi) correspond bien à une réservation
 	// de la salle indiquée ($idSalle) pour l'heure courante
 	// fournit la valeur 0 si le digicode n'est pas bon, 1 si le digicode est bon
