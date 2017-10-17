@@ -57,21 +57,21 @@ else
 
 
 
-/*
+
 // test de la méthode confirmerReservation --------------------------------------------------------
 // pour ce test, utiliser une réservation dont le champ status est mis auparavant à 4 (état provisoire)
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de confirmerReservation : </h3>";
-$laReservation = $dao->getReservation("1");
+$laReservation = $dao->getReservation("2");
 if ($laReservation) {
 	echo "<p>Etat de la réservation 1 avant confirmation : <b>" . $laReservation->getStatus() . "</b><br>";
-	$dao->confirmerReservation("1");
-	$laReservation = $dao->getReservation("1");
+	$dao->confirmerReservation("2");
+	$laReservation = $dao->getReservation("2");
 	echo "Etat de la réservation 1 après confirmation : <b>" . $laReservation->getStatus() . "</b></p>";
 }
 else
 	echo "<p>La réservation 1 n'existe pas !</p>";
-*/
+
 
 
 // test de la méthode creerLesDigicodesManquants --------------------------------------------------
@@ -108,7 +108,7 @@ else
 
 
 
-
+/*
 // test de la méthode estLeCreateur ---------------------------------------------------------------
 // modifié par Jim le 25/9/2015
 echo "<h3>Test de estLeCreateur : </h3>";
@@ -116,7 +116,7 @@ if ($dao->estLeCreateur("admin", "1")) $estLeCreateur = "oui"; else $estLeCreate
 echo "<p>'admin' a créé la réservation 1 : <b>" . $estLeCreateur . "</b><br>";
 if ($dao->estLeCreateur("zenelsy", "1")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
 echo "'zenelsy' a créé la réservation 1 : <b>" . $estLeCreateur . "</b></p>";
-
+*/
 
 
 
