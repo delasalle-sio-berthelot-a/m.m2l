@@ -39,7 +39,7 @@ else
 
 
 
-/*
+
 // test de la méthode aPasseDesReservations -------------------------------------------------------
 // pour ce test, choisir un utilisateur avec des réservations et un autre sans réservation
 // modifié par Jim le 28/9/2015
@@ -49,12 +49,12 @@ if ($ok)
 	echo "<p>zenelsy a bien passé des réservations !<br>";
 else
 	echo "<p>zenelsy n'a pas passé de réservations !<br>";
-$ok = $dao->aPasseDesReservations("jim");
+$ok = $dao->aPasseDesReservations("admin");
 if ($ok)
-	echo "jim a bien passé des réservations !</p>";
+	echo "l'administrateur a bien passé des réservations !</p>";
 else
-	echo "jim n'a pas passé de réservations !</p>";
-*/
+	echo "l'administrateur n'a pas passé de réservations !</p>";
+
 
 
 /*
@@ -95,7 +95,7 @@ else
 */
 
 
-/*
+
 // test de la méthode envoyerMdp ------------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de envoyerMdp : </h3>";
@@ -105,7 +105,7 @@ if ($ok)
 	echo "<p>Mail bien envoyé !</p>";
 else
 	echo "<p>Echec lors de l'envoi du mail !</p>";
-*/
+
 
 
 
