@@ -39,7 +39,7 @@ else
 
 
 
-
+/*
 // test de la méthode aPasseDesReservations -------------------------------------------------------
 // pour ce test, choisir un utilisateur avec des réservations et un autre sans réservation
 // modifié par Jim le 28/9/2015
@@ -49,12 +49,12 @@ if ($ok)
 	echo "<p>zenelsy a bien passé des réservations !<br>";
 else
 	echo "<p>zenelsy n'a pas passé de réservations !<br>";
-$ok = $dao->aPasseDesReservations("admin");
+$ok = $dao->aPasseDesReservations("jim");
 if ($ok)
-	echo "l'administrateur a bien passé des réservations !</p>";
+	echo "jim a bien passé des réservations !</p>";
 else
-	echo "l'administrateur n'a pas passé de réservations !</p>";
-
+	echo "jim n'a pas passé de réservations !</p>";
+*/
 
 
 /*
@@ -105,22 +105,18 @@ if ($ok)
 	echo "<p>Mail bien envoyé !</p>";
 else
 	echo "<p>Echec lors de l'envoi du mail !</p>";
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'master' of https://github.com/delasalle-sio-berthelot-a/m.m2l.17.git
 
 
 
-
+/*
 // test de la méthode estLeCreateur ---------------------------------------------------------------
 // modifié par Jim le 25/9/2015
 echo "<h3>Test de estLeCreateur : </h3>";
-if ($dao->estLeCreateur("admin", "1")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
-echo "<p>'admin' a créé la réservation 1 : <b>" . $estLeCreateur . "</b><br>";
-if ($dao->estLeCreateur("zenelsy", "1")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
-echo "'zenelsy' a créé la réservation 1 : <b>" . $estLeCreateur . "</b></p>";
-
+if ($dao->estLeCreateur("admin", "11")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
+echo "<p>'admin' a créé la réservation 11 : <b>" . $estLeCreateur . "</b><br>";
+if ($dao->estLeCreateur("zenelsy", "11")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
+echo "'zenelsy' a créé la réservation 11 : <b>" . $estLeCreateur . "</b></p>";
+*/
 
 
 
@@ -151,7 +147,7 @@ echo "Un digicode aléatoire : <b>" . $dao->genererUnDigicode() . "</b><br>";
 echo "Un digicode aléatoire : <b>" . $dao->genererUnDigicode() . "</b><p>";
 
 
-/*
+
 // test de la méthode getLesReservations ----------------------------------------------------------
 // modifié par Jim le 25/5/2016
 echo "<h3>Test de getLesReservations : </h3>";
@@ -171,7 +167,7 @@ foreach ($lesReservations as $uneReservation)
 {	echo ($uneReservation->toString());
 	echo ('<br>');
 }
-*/
+
 
 
 
@@ -233,7 +229,7 @@ else
 
 
 
-/*
+
 // test de la méthode modifierMdpUser -------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de modifierMdpUser : </h3>";
@@ -252,14 +248,13 @@ if ($unUtilisateur) {
 }
 else
 	echo "<p>L'utilisateur admin n'existe pas !</p>";
-*/
 
 
 
 // test de la méthode supprimerUtilisateur --------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de supprimerUtilisateur : </h3>";
-$ok = $dao->supprimerUtilisateur("poulainm");
+$ok = $dao->supprimerUtilisateur("jim1");
 if ($ok)
  	echo "<p>Utilisateur bien supprimé !</p>";
 else
@@ -267,22 +262,22 @@ else
 
 
 
-/*
+
 // test de la méthode testerDigicodeBatiment ------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de testerDigicodeBatiment : </h3>";
-$reponse = $dao->testerDigicodeBatiment("34214E");
-echo "<p>L'appel de testerDigicodeBatiment('34214E') donne : <b>" . $reponse . "</b><br>";
-*/
+$reponse = $dao->testerDigicodeBatiment("3218FB");
+echo "<p>L'appel de testerDigicodeBatiment('3218FB') donne : <b>" . $reponse . "</b><br>";
 
 
-/*
+
+
 // test de la méthode testerDigicodeSalle ---------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de testerDigicodeSalle : </h3>";
-$reponse = $dao->testerDigicodeSalle("15", "410EE4");
-echo "<p>L'appel de testerDigicodeSalle('15', '410EE4') donne : <b>" . $reponse . "</b><br>";
-*/
+$reponse = $dao->testerDigicodeSalle("15", "E8A2C3");
+echo "<p>L'appel de testerDigicodeSalle('15', 'E8A2C3') donne : <b>" . $reponse . "</b><br>";
+
 
 // ferme la connexion à MySQL :
 unset($dao);
