@@ -76,13 +76,16 @@ class DAO
 	// ------------------------------------------------------------------------------------------------------
 
 
-	public function aPasseDesReservations()
+	public function aPasseDesReservations($nom)
 {
 	// création de la requete qui permet de récuperer le nom du créateur de l'évènement
-    $req_pre = "SELECT create_by FROM mrbs_entry";
+    $req_pre = "SELECT create_by FROM mrbs_entry WHERE create_by = :nom";
     $req = $this->cnx->prepare($req_pre);
-    $req->execute();
+    $req->bindValue("nom", $nom, PDO::PARAM_STR);
+    $ok= $req->execute();
     
+  return $ok ;
+  
     
 }
 	// mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
@@ -175,12 +178,12 @@ class DAO
 	    //si l'adr n'est pas dans la base
 	    if ( ! $this->existeUtilisateur($unUtilisateur) ) return false;
 	    //recherche adr mail
-	    $adrmail = $this->getUtilisateur($unUilisateur)->getEmail();
+	    $adrmail = $this->getUtilisateur($unUtilisateur)->getEmail();
 	    //envoi du mail
 	    $sujet = "Nouveau mot de passe";
 	    $message = "Votre mot de passe vien d'être modifié, votre nouveau mot de passe est : " . $newPassword;
 	    $sendMail = Outils::envoyerMail($adrmail, $sujet, $message, $adr_mail_sender);
-	    return $sendmail; 
+	    return $sendMail; 
 	}
 	
 
