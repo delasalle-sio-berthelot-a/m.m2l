@@ -49,7 +49,7 @@ if ($ok)
 	echo "<p>zenelsy a bien passé des réservations !<br>";
 else
 	echo "<p>zenelsy n'a pas passé de réservations !<br>";
-$ok = $dao->aPasseDesReservations("jim");
+$ok = $dao->aPasseDesReservations("admin");
 if ($ok)
 	echo "jim a bien passé des réservations !</p>";
 else

@@ -76,7 +76,15 @@ class DAO
 	// ------------------------------------------------------------------------------------------------------
 
 
-
+	public function aPasseDesReservations()
+{
+	// création de la requete qui permet de récuperer le nom du créateur de l'évènement
+    $req_pre = "SELECT create_by FROM mrbs_entry";
+    $req = $this->cnx->prepare($req_pre);
+    $req->execute();
+    
+    
+}
 	// mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
 	// cette fonction peut dépanner en cas d'absence des triggers chargés de créer les digicodes
 	// modifié par Jim le 5/5/2015
@@ -372,7 +380,7 @@ class DAO
 	        return null;
 	}
 	
-<<<<<<< HEAD
+
 	   
 	public function getUtilisateur($nomUser)
 	{	// préparation de la requête de recherche
@@ -432,8 +440,7 @@ class DAO
 	}	
 	
 	
-	
-=======
+
 	// annulerReservation            : enregistre l'annulation de réservation dans la bdd
 	// modifié par Antoine le 10/10/17
 	public function annulerReservation($idReservation){
@@ -445,7 +452,7 @@ class DAO
 	    $ok = $req->execute();
 	    return $ok;
 	}
->>>>>>> branch 'master' of https://github.com/delasalle-sio-berthelot-a/m.m2l.git
+
 	
 	// fournit le niveau d'un utilisateur identifié par $nomUser et $mdpUser
 	// renvoie "utilisateur" ou "administrateur" si authentification correcte, "inconnu" sinon
