@@ -76,7 +76,18 @@ class DAO
 	// ------------------------------------------------------------------------------------------------------
 
 
-
+	public function aPasseDesReservations($nom)
+{
+	// création de la requete qui permet de récuperer le nom du créateur de l'évènement
+    $req_pre = "SELECT create_by FROM mrbs_entry WHERE create_by = :nom";
+    $req = $this->cnx->prepare($req_pre);
+    $req->bindValue("nom", $nom, PDO::PARAM_STR);
+    $ok= $req->execute();
+    
+  return $ok ;
+  
+    
+}
 	// mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
 	// cette fonction peut dépanner en cas d'absence des triggers chargés de créer les digicodes
 	// modifié par Jim le 5/5/2015
@@ -167,12 +178,12 @@ class DAO
 	    //si l'adr n'est pas dans la base
 	    if ( ! $this->existeUtilisateur($unUtilisateur) ) return false;
 	    //recherche adr mail
-	    $adrmail = $this->getUtilisateur($unUilisateur)->getEmail();
+	    $adrmail = $this->getUtilisateur($unUtilisateur)->getEmail();
 	    //envoi du mail
 	    $sujet = "Nouveau mot de passe";
 	    $message = "Votre mot de passe vien d'être modifié, votre nouveau mot de passe est : " . $newPassword;
 	    $sendMail = Outils::envoyerMail($adrmail, $sujet, $message, $adr_mail_sender);
-	    return $sendmail; 
+	    return $sendMail; 
 	}
 	
 
@@ -413,23 +424,50 @@ class DAO
 	public function supprimerUtilisateur($nomUser)
 	{	
 	    // préparation de la requête de recherche
-	    $txt_req = "";
+	    $txt_req = "DELETE FROM mrbs_users WHERE name = :nomUser";
 	    $req = $this->cnx->prepare($txt_req);
 	    // liaison de la requête et de ses paramètres
 	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
-	    // extraction des données
+	    // exécution de la requete
+	    $ok = $req->execute();
+	    return $ok;
+	}
+	
+	/*
+	public function estLeCreateur($nomUser,$idReservation)
+	{
+	    // préparation de la requête de recherche
+	    $txt_req = "SELECT FROM mrbs_entry WHERE create_by = :nomUser and id = :idReservation";
+	    $req = $this->cnx->prepare($txt_req);
+	    // liaison de la requête et de ses paramètres
+	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
+	    $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
+	    // exécution de la requete
 	    $req->execute();
-	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
-	    // traitement de la réponse
-	   
 	    // libère les ressources du jeu de données
 	    $req->closeCursor();
+	    
 	    // fourniture de la réponse
+
+
+    	    if ($req)
+    	    {
+    	        return true;
+    	    }
+    	    else
+    	    {
+    	    
+    	    }
+    	    
+    	    return false;
+    	    
+	}
+
+
 	    return $reponse;
 	}	
-	
-	
-	
+	*/
+
 
 	// annulerReservation            : enregistre l'annulation de réservation dans la bdd
 	// modifié par Antoine le 10/10/17

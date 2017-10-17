@@ -39,7 +39,7 @@ else
 
 
 
-/*
+
 // test de la méthode aPasseDesReservations -------------------------------------------------------
 // pour ce test, choisir un utilisateur avec des réservations et un autre sans réservation
 // modifié par Jim le 28/9/2015
@@ -49,12 +49,12 @@ if ($ok)
 	echo "<p>zenelsy a bien passé des réservations !<br>";
 else
 	echo "<p>zenelsy n'a pas passé de réservations !<br>";
-$ok = $dao->aPasseDesReservations("jim");
+$ok = $dao->aPasseDesReservations("admin");
 if ($ok)
-	echo "jim a bien passé des réservations !</p>";
+	echo "l'administrateur a bien passé des réservations !</p>";
 else
-	echo "jim n'a pas passé de réservations !</p>";
-*/
+	echo "l'administrateur n'a pas passé de réservations !</p>";
+
 
 
 /*
@@ -105,18 +105,22 @@ if ($ok)
 	echo "<p>Mail bien envoyé !</p>";
 else
 	echo "<p>Echec lors de l'envoi du mail !</p>";
+<<<<<<< HEAD
+
+=======
+>>>>>>> branch 'master' of https://github.com/delasalle-sio-berthelot-a/m.m2l.17.git
 
 
 
-/*
+
 // test de la méthode estLeCreateur ---------------------------------------------------------------
 // modifié par Jim le 25/9/2015
 echo "<h3>Test de estLeCreateur : </h3>";
-if ($dao->estLeCreateur("admin", "11")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
-echo "<p>'admin' a créé la réservation 11 : <b>" . $estLeCreateur . "</b><br>";
-if ($dao->estLeCreateur("zenelsy", "11")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
-echo "'zenelsy' a créé la réservation 11 : <b>" . $estLeCreateur . "</b></p>";
-*/
+if ($dao->estLeCreateur("admin", "1")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
+echo "<p>'admin' a créé la réservation 1 : <b>" . $estLeCreateur . "</b><br>";
+if ($dao->estLeCreateur("zenelsy", "1")) $estLeCreateur = "oui"; else $estLeCreateur = "non";
+echo "'zenelsy' a créé la réservation 1 : <b>" . $estLeCreateur . "</b></p>";
+
 
 
 
@@ -229,7 +233,7 @@ else
 
 
 
-
+/*
 // test de la méthode modifierMdpUser -------------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de modifierMdpUser : </h3>";
@@ -248,14 +252,14 @@ if ($unUtilisateur) {
 }
 else
 	echo "<p>L'utilisateur admin n'existe pas !</p>";
-
+*/
 
 
 
 // test de la méthode supprimerUtilisateur --------------------------------------------------------
 // modifié par Jim le 28/9/2015
 echo "<h3>Test de supprimerUtilisateur : </h3>";
-$ok = $dao->supprimerUtilisateur("jim1");
+$ok = $dao->supprimerUtilisateur("poulainm");
 if ($ok)
  	echo "<p>Utilisateur bien supprimé !</p>";
 else
