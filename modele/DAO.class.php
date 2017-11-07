@@ -79,13 +79,30 @@ class DAO
 	public function aPasseDesReservations($nom)
 {
 	// création de la requete qui permet de récuperer le nom du créateur de l'évènement
-    $req_pre = "SELECT create_by FROM mrbs_entry WHERE create_by = :nom";
+    $req_pre = "SELECT * FROM mrbs_entry WHERE create_by = :nom";
     $req = $this->cnx->prepare($req_pre);
     $req->bindValue("nom", $nom, PDO::PARAM_STR);
-    $ok= $req->execute();
+    $req->execute();
+    $ok = $req->fetchColumn(0);
+    $req->closeCursor();
+    if($ok == 0)
+        return false;
+    else 
+        return true;
+}
+
+public function confirmerReservation($idReservation){
     
-  return $ok ;
-  
+    $req_pre= "UPDATE mrbs_entry SET status = 1 WHERE mrbs_entry.id = :id";
+    $req = $this->cnx->prepare($req_pre);
+    $req->bindValue("id", $idReservation, PDO::PARAM_INT);
+    $req->execute();
+    $ok = $req->fetchColumn(0);
+    $req->closeCursor();
+    if($ok == 0)
+        return false;
+     else
+        return true;
     
 }
 	// mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
@@ -530,6 +547,34 @@ class DAO
 			return "0";
 		else
 			return "1";
+	}
+	
+	public function testerDigicodeBatiment($digicodeSaisi)
+	{	global $DELAI_DIGICODE;
+	// préparation de la requete de recherche
+	$txt_req = "Select count(*)";
+	$txt_req = $txt_req . " from mrbs_entry_digicode";
+	$txt_req = $txt_req . " where mrbs_entry.id = mrbs_entry_digicode.id";
+	$txt_req = $txt_req . " and digicode = :digicodeSaisi";
+	$txt_req = $txt_req . " and (start_time - :delaiDigicode) < " . time();
+	$txt_req = $txt_req . " and (end_time + :delaiDigicode) > " . time();
+	
+	$req = $this->cnx->prepare($txt_req);
+	// liaison de la requête et de ses paramètres
+	$req->bindValue("digicodeSaisi", $digicodeSaisi, PDO::PARAM_STR);
+	$req->bindValue("delaiDigicode", $DELAI_DIGICODE, PDO::PARAM_INT);
+	
+	// exécution de la requete
+	$req->execute();
+	$nbReponses = $req->fetchColumn(0);
+	// libère les ressources du jeu de données
+	$req->closeCursor();
+	
+	// fourniture de la réponse
+	if ($nbReponses == 0)
+	    return "0";
+	    else
+	        return "1";
 	}
 	
 } // fin de la classe DAO
