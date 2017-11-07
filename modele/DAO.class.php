@@ -433,40 +433,29 @@ class DAO
 	    return $ok;
 	}
 	
-	/*
+	
 	public function estLeCreateur($nomUser,$idReservation)
 	{
 	    // préparation de la requête de recherche
-	    $txt_req = "SELECT FROM mrbs_entry WHERE create_by = :nomUser and id = :idReservation";
+	    $txt_req = "SELECT * FROM mrbs_entry WHERE create_by = :nomUser and id = :idReservation";
 	    $req = $this->cnx->prepare($txt_req);
 	    // liaison de la requête et de ses paramètres
 	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
 	    $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
 	    // exécution de la requete
 	    $req->execute();
-	    // libère les ressources du jeu de données
-	    $req->closeCursor();
+	    $nbReponses = $req->fetchColumn(0);
 	    
-	    // fourniture de la réponse
-
-
-    	    if ($req)
+	    if ($nbReponses != 0)
     	    {
     	        return true;
     	    }
     	    else
     	    {
-    	    
+    	        return false;
     	    }
-    	    
-    	    return false;
-    	    
 	}
 
-
-	    return $reponse;
-	}	
-	*/
 
 
 	// annulerReservation            : enregistre l'annulation de réservation dans la bdd
