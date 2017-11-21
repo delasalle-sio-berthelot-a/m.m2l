@@ -122,6 +122,7 @@
 						<p>Il est conseillé de le changer aussitôt.</p>
 						<p style="margin-top: 0px; margin-bottom: 0px;">
 							<a href="index.php?action=DemanderMdp" data-role="button" data-mini="true" data-transition="<?php echo $transition; ?>">Obtenir un nouveau mot de passe</a>
+							
 						</p>
 					</div>
 

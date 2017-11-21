@@ -79,13 +79,30 @@ class DAO
 	public function aPasseDesReservations($nom)
 {
 	// création de la requete qui permet de récuperer le nom du créateur de l'évènement
-    $req_pre = "SELECT create_by FROM mrbs_entry WHERE create_by = :nom";
+    $req_pre = "SELECT * FROM mrbs_entry WHERE create_by = :nom";
     $req = $this->cnx->prepare($req_pre);
     $req->bindValue("nom", $nom, PDO::PARAM_STR);
-    $ok= $req->execute();
+    $req->execute();
+    $ok = $req->fetchColumn(0);
+    $req->closeCursor();
+    if($ok == 0)
+        return false;
+    else 
+        return true;
+}
+
+public function confirmerReservation($idReservation){
     
-  return $ok ;
-  
+    $req_pre= "UPDATE mrbs_entry SET status = 1 WHERE mrbs_entry.id = :id";
+    $req = $this->cnx->prepare($req_pre);
+    $req->bindValue("id", $idReservation, PDO::PARAM_INT);
+    $req->execute();
+    $ok = $req->fetchColumn(0);
+    $req->closeCursor();
+    if($ok == 0)
+        return false;
+     else
+        return true;
     
 }
 	// mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
@@ -433,40 +450,29 @@ class DAO
 	    return $ok;
 	}
 	
-	/*
+	
 	public function estLeCreateur($nomUser,$idReservation)
 	{
 	    // préparation de la requête de recherche
-	    $txt_req = "SELECT FROM mrbs_entry WHERE create_by = :nomUser and id = :idReservation";
+	    $txt_req = "SELECT * FROM mrbs_entry WHERE create_by = :nomUser and id = :idReservation";
 	    $req = $this->cnx->prepare($txt_req);
 	    // liaison de la requête et de ses paramètres
 	    $req->bindValue("nomUser", $nomUser, PDO::PARAM_STR);
 	    $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
 	    // exécution de la requete
 	    $req->execute();
-	    // libère les ressources du jeu de données
-	    $req->closeCursor();
+	    $nbReponses = $req->fetchColumn(0);
 	    
-	    // fourniture de la réponse
-
-
-    	    if ($req)
+	    if ($nbReponses != 0)
     	    {
     	        return true;
     	    }
     	    else
     	    {
-    	    
+    	        return false;
     	    }
-    	    
-    	    return false;
-    	    
 	}
 
-
-	    return $reponse;
-	}	
-	*/
 
 
 	// annulerReservation            : enregistre l'annulation de réservation dans la bdd
