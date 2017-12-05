@@ -1,6 +1,4 @@
-<?php 
-// on vérifie si le demandeur de cette action est bien authentifié
-if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisateur'] != 'administrateur') {
+<?php if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisateur'] != 'administrateur') {
     // si le demandeur n'est pas authentifié, il s'agit d'une tentative d'accès frauduleux
     // dans ce cas, on provoque une redirection vers la page de connexion
     header ("Location: index.php?action=Deconnecter");
@@ -61,24 +59,24 @@ else {
                     $themeFooter = $themeProbleme;
                     include_once ('vues/VueConfirmerReservation.php');
                     
-                } 
+                }
                 else {
                     // l'utilisateur est l'auteur de cette déclaration
                     
                     // quatrième vérification : on vérifie si la réservation n'est pas déjà confirmée
                     // on récupère la réservation sous forme d'objet
-                
+                    
                     $laReservation = $dao->getReservation($numReservation);
                     
                     // on va check le status avec le getter
                     
-                    $status = $laReservation->getStatus();
+                    $status = $laReservation->getStatus();             
                     
                     if ($status == 0){
                         // la réservation est déjà confirmée
-                        $message = "La réservation est déjà confirmée !";
-                        $typeMessage = 'avertissement';
-                        $themeFooter = $themeProbleme;
+                       $message = "La réservation est déjà confirmée !";
+                       $typeMessage = 'avertissement';
+                       $themeFooter = $themeProbleme;
                         include_once ('vues/VueConfirmerReservation.php');
                     }
                     else {
@@ -96,7 +94,7 @@ else {
                             $typeMessage = 'avertissement';
                             $themeFooter = $themeProbleme;
                             include_once ('vues/VueConfirmerReservation.php');
-    
+                            
                         }
                         else {
                             // tout est ok, on peut confirmer la réservation et envoyer le mail à l'utilisateur
@@ -108,7 +106,7 @@ else {
                             $mail = $user->getEmail();
                             
                             $sujet = "Confirmation réservation n° ".$numReservation;
-                            $adresseEmetteur = "delasalle.sio.rossi.d@gmail.com";
+                            $adresseEmetteur = "delasalle.sio.eleves@gmail.com";
                             $message = "La réservation n° ".$numReservation." a bien été confirmée ! "."Bonne journée ".$nom." ! ";
                             $ok = Outils::envoyerMail($mail, $sujet, $message, $adresseEmetteur);
                             
@@ -126,7 +124,7 @@ else {
                             include_once ('vues/VueConfirmerReservation.php');
                         }
                     }
-            
+                    
                 }
                 
             }

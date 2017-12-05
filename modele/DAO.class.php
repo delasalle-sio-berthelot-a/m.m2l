@@ -360,26 +360,24 @@ public function confirmerReservation($idReservation){
 	// renvoie "utilisateur" ou "administrateur" si authentification correcte, "inconnu" sinon
 	// modifié par Thomas le 5/5/2015
 	public function getReservation($idReservation)
-	{	// préparation de la requête de recherche
-	    $txt_req = "Select mrbs_entry.id as id_entry, timestamp, start_time, end_time, room_name, status, digicode";
+	{	// préparation de la requete
+	    
+	    $txt_req = "Select mrbs_entry.id, timestamp, start_time, end_time, room_name, status, digicode";
 	    $txt_req = $txt_req . " from mrbs_entry, mrbs_room, mrbs_entry_digicode";
-	    $txt_req = $txt_req . " where mrbs_entry.room_id = mrbs_room.id";
+	    $txt_req = $txt_req . " where mrbs_entry.id = :idReservation";
 	    $txt_req = $txt_req . " and mrbs_entry.id = mrbs_entry_digicode.id";
-	    $txt_req = $txt_req . " and mrbs_entry.id = :idReservation";
+	    $txt_req = $txt_req . " and mrbs_entry.room_id = mrbs_room.id;";
 	    
 	    $req = $this->cnx->prepare($txt_req);
 	    // liaison de la requête et de ses paramètres
 	    $req->bindValue("idReservation", $idReservation, PDO::PARAM_STR);
-	    // exécution de la requete
+	    // extraction des données
 	    $req->execute();
 	    $uneLigne = $req->fetch(PDO::FETCH_OBJ);
-	    // libère les ressources du jeu de données
 	    
-	    
-	    // fourniture de la réponse
-	    if ($uneLigne)
-	    {    // création d'un objet Reservation
-	        $unId = utf8_encode($uneLigne->id_entry);
+	    if ($uneLigne) {
+	        
+	        $unId = $uneLigne->id;
 	        $unTimeStamp = utf8_encode($uneLigne->timestamp);
 	        $unStartTime = utf8_encode($uneLigne->start_time);
 	        $unEndTime = utf8_encode($uneLigne->end_time);
@@ -387,14 +385,14 @@ public function confirmerReservation($idReservation){
 	        $unStatus = utf8_encode($uneLigne->status);
 	        $unDigicode = utf8_encode($uneLigne->digicode);
 	        
-	        $uneReservation = new Reservation($unId, $unTimeStamp, $unStartTime, $unEndTime, $unRoomName, $unStatus, $unDigicode);
- 
-	        $req->closeCursor();
-	        
-	        return $uneReservation;
+	        $laReservation = new Reservation($unId, $unTimeStamp, $unStartTime, $unEndTime, $unRoomName, $unStatus, $unDigicode);
 	    }
-	    else 
-	        return null;
+	    else
+	    {
+	        $laReservation = null;
+	    }
+	    
+	    return $laReservation;
 	}
 	
 
