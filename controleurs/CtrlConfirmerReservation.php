@@ -108,7 +108,7 @@ else {
                             $mail = $user->getEmail();
                             
                             $sujet = "Confirmation réservation n° ".$numReservation;
-                            $adresseEmetteur = "delasalle.sio.eleves@gmail.com";
+                            $adresseEmetteur = "delasalle.sio.rossi.d@gmail.com";
                             $message = "La réservation n° ".$numReservation." a bien été confirmée ! "."Bonne journée ".$nom." ! ";
                             $ok = Outils::envoyerMail($mail, $sujet, $message, $adresseEmetteur);
                             
