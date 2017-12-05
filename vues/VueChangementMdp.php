@@ -20,7 +20,7 @@
 			<div data-role="content">
 				<h4 style="text-align: center; margin-top: 0px; margin-bottom: 0px;">Modifier mon mot de passe:</h4>
 				<p style="text-align: center;"><?php echo $msg; ?></p>
-				<form name="form1" id="form1" action="index.php?action=ChangerDeMdp" data-ajax="false" method="post" data-transition="<?php echo $transition; ?>">
+				<form name="form1" id="form1" action="index.php?action=ChangementMdp" data-ajax="false" method="post" data-transition="<?php echo $transition; ?>">
 							<div data-role="fieldcontain" class="ui-hide-label">
 								<label for="mdp1">Nouveau mot de passe :</label>
 								<input type="<?php if($afficherMdp == 'on') echo 'text'; else echo 'password'; ?>" name="mdp1" id="mdp1" data-mini="true" 
