@@ -9,15 +9,21 @@ else {
     if(!isset ($_POST["mdp1"]) && !isset ($_POST["mdp2"])){
         $msg="";
     }
+    
     elseif( !isset ($_POST["mdp1"]) || !isset ($_POST["mdp2"]) ) {
         // si les données n'ont pas été postées, c'est le premier appel du formulaire : affichage de la vue sans message d'erreur
         $msg= "Merci de remplir tous les champs";
     }
+    
     elseif($_POST["mdp1"] != $_POST["mdp2"]){
         $msg= "Les deux mots de passes rentrés ne sont pas identiques";
-    }elseif($_SESSION["mdp"] == $_POST["mdp1"]){
+    }
+       
+    elseif($_SESSION["mdp"] == $_POST["mdp1"]){
         $msg= "Le nouveau mot de passe doit etre different de l'ancien";
-    }else{
+    }
+    
+    else{
         include_once ('modele/DAO.class.php');
         $dao = new DAO();
         $dao->modifierMdpUser($_SESSION["nom"], $_SESSION["mdp"]);

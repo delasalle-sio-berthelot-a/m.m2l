@@ -1,4 +1,5 @@
-<?php if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisateur'] != 'administrateur') {
+<?php 
+if ( $_SESSION['niveauUtilisateur'] != 'utilisateur' && $_SESSION['niveauUtilisateur'] != 'administrateur') {
     // si le demandeur n'est pas authentifié, il s'agit d'une tentative d'accès frauduleux
     // dans ce cas, on provoque une redirection vers la page de connexion
     header ("Location: index.php?action=Deconnecter");
@@ -70,7 +71,8 @@ else {
                     
                     // on va check le status avec le getter
                     
-                    $status = $laReservation->getStatus();             
+                    $status = $laReservation->getStatus();
+             
                     
                     if ($status == 0){
                         // la réservation est déjà confirmée
