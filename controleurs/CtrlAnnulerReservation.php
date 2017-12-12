@@ -30,7 +30,7 @@ else {
 		}
 		else {
 			$laReservation = $dao->getReservation($idReservation);
-			$laDateReservation = $laReservation->getEnd_time();
+			$laDateReservation = $Reservation->end_time();
 			
 			if ($laDateReservation <= time()){
 				$message = "Cette réservation est déjà passée !";
