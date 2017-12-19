@@ -69,10 +69,23 @@ else {
                     $contenuMail = "L'administrateur du système de réservations de la M2L vient de vous supprimer votre compte utilisateur.\n\n";
                  
                     $ok = Outils::envoyerMail($adrMail, $sujet, $contenuMail, $ADR_MAIL_EMETTEUR);
-                
+                  if ( ! $suppr)
+                  {
+                      $message = "Impossible de supprimer !";
+                      $typeMessage = 'avertissement';
+                      $themeFooter = $themeProbleme;
+                      include_once ('vues/VueSupprimerUtilisateur.php');
+                  }
+                  
+                  else {
+                      $suppr = $dao->supprimerUtilisateur($name);
+                        }
+                      
+                     
+                    
                     if ( ! $ok ) {
                         // si l'envoi de mail a échoué, réaffichage de la vue avec un message explicatif
-                        $suppr = $dao->supprimerUtilisateur($name);
+                        
                         $message = "Suppression effectuée.<br>L'envoi du mail à l'utilisateur a rencontré un problème !";
                         $typeMessage = 'avertissement';
                         $themeFooter = $themeProbleme;
