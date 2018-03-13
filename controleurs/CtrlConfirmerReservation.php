@@ -98,7 +98,8 @@ else {
                             include_once ('vues/VueConfirmerReservation.php');
                             
                         }
-                        else {
+                        else
+                        {
                             // tout est ok, on peut confirmer la réservation et envoyer le mail à l'utilisateur
                             
                             $confirm = $dao->confirmerReservation($numReservation);
@@ -108,9 +109,8 @@ else {
                             $mail = $user->getEmail();
                             
                             $sujet = "Confirmation réservation n° ".$numReservation;
-                            $adresseEmetteur = "delasalle.sio.eleves@gmail.com";
                             $message = "La réservation n° ".$numReservation." a bien été confirmée ! "."Bonne journée ".$nom." ! ";
-                            $ok = Outils::envoyerMail($mail, $sujet, $message, $adresseEmetteur);
+                            $ok = Outils::envoyerMail($mail, $sujet, $message, $ADR_MAIL_EMETTEUR);
                             
                             if ( $ok ) {
                                 $message = "Enregistrement effectué.<br>Vous allez recevoir un mail de confirmation.";
