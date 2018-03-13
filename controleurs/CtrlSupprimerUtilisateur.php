@@ -5,6 +5,8 @@
 // Création : 21/10/2015 par JM CARTRON
 // Mise à jour : 2/6/2016 par JM CARTRON
 
+
+
 // on vérifie si le demandeur de cette action a le niveau administrateur
 if ($_SESSION['niveauUtilisateur'] != 'administrateur') {
     // si l'utilisateur n'a pas le niveau administrateur, il s'agit d'une tentative d'accès frauduleux
@@ -59,15 +61,31 @@ else {
                 }
                 else {
                     // envoi d'un mail de confirmation de suppression
+                    
+                    $user = $dao->getUtilisateur($name);
+                    
+                    $adrMail = $user->getEmail();
+                    $sujet = "Suppression utilisateur GRR";
                     $contenuMail = "L'administrateur du système de réservations de la M2L vient de vous supprimer votre compte utilisateur.\n\n";
-                    $contenuMail .= "Votre nom : " . $name . "\n";
-                    $contenuMail .= "Votre mot de passe : " . $password . " (nous vous conseillons de le changer lors de la première connexion)\n";
-                    $contenuMail .= "Votre niveau d'accès (0 : invité    1 : utilisateur    2 : administrateur) : " . $level . "\n";
-                    $contenuMail .= "N'hésiter pas à contacter M2L en cas de problèmes !";
-
+                 
                     $ok = Outils::envoyerMail($adrMail, $sujet, $contenuMail, $ADR_MAIL_EMETTEUR);
+                  if ( ! $suppr)
+                  {
+                      $message = "Impossible de supprimer !";
+                      $typeMessage = 'avertissement';
+                      $themeFooter = $themeProbleme;
+                      include_once ('vues/VueSupprimerUtilisateur.php');
+                  }
+                  
+                  else {
+                      $suppr = $dao->supprimerUtilisateur($name);
+                        }
+                      
+                     
+                    
                     if ( ! $ok ) {
                         // si l'envoi de mail a échoué, réaffichage de la vue avec un message explicatif
+                        
                         $message = "Suppression effectuée.<br>L'envoi du mail à l'utilisateur a rencontré un problème !";
                         $typeMessage = 'avertissement';
                         $themeFooter = $themeProbleme;
