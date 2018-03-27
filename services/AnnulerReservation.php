@@ -57,7 +57,7 @@ else {
                 $msg = "Erreur : authentification incorrecte.";
             }
             else {
-                if ($dao->getReservation($numreservation) == "inconnu"){
+                if ($dao->getReservation($numreservation) == null){
                     $msg = "Erreur : numéro de réservation inexistant.";
                 }
                 else{
@@ -65,7 +65,7 @@ else {
                         $msg = "Erreur : vous n'êtes pas l'auteur de cette réservation.";
                     }
                     else {
-                        if ( $dao->getReservation($idReservation)->getEnd_time() <= time() ) {
+                        if ( $dao->getReservation($numreservation)->getEnd_time() <= time() ) {
                             $msg = "Erreur : cette réservation est déjà passée.";
                         }
                         else {
