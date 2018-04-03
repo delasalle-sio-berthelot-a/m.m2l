@@ -1,41 +1,53 @@
-<?php
-if ( empty ($_REQUEST["name"]) == true)  $name = "";  else   $name = $_REQUEST["name"];
 
+<?php
+// Service web du projet Réservations M2L
+// Ecrit le 31/3/2016 par Jim
+// Modifié le 3/6/2016 par Jim
+// Ce service web permet à un utilisateur de consulter ses réservations à venir
+// et fournit un flux XML contenant un compte-rendu d'exécution
+// Le service web doit recevoir 2 paramètres : nom, mdp
+// Les paramètres peuvent être passés par la méthode GET (pratique pour les tests, mais à éviter en exploitation) :
+//     http://<hébergeur>/ConsulterReservations.php?nom=zenelsy&mdp=passe
+// Les paramètres peuvent être passés par la méthode POST (à privilégier en exploitation pour la confidentialité des données) :
+//     http://<hébergeur>/ConsulterReservations.php
 // inclusion de la classe Outils
 include_once ('../modele/Outils.class.php');
 // inclusion des paramètres de l'application
 include_once ('../modele/parametres.localhost.php');
-
-// connexion du serveur web à la base MySQL
-include_once ('../modele/DAO.class.php');
-$dao = new DAO();
-
-// Contrôle de la présence des paramètres
-if ( $name == "") {
-    $msg = "Erreur : données incomplètes ou incorrectes.";
+	
+// Récupération des données transmises
+// la fonction $_GET récupère une donnée passée en paramètre dans l'URL par la méthode GET
+if ( empty ($_GET ["nom"]) == true)  $nom = "";  else   $nom = $_GET ["nom"];
+// si l'URL ne contient pas les données, on regarde si elles ont été envoyées par la méthode POST
+// la fonction $_POST récupère une donnée envoyées par la méthode POST
+if ( $nom == ""  )
+{	if ( empty ($_POST ["nom"]) == true)  $nom = "";  else   $nom = $_POST ["nom"];
 }
-    else 
-      if ( !$dao->existeUtilisateur($name) ) {
-        $msg = "Erreur : nom d'utilisateur inexistant.";
-        }
-         else {
-            // nouveau mdp
-             $password = Outils::creerMdp();
-             $dao->modifierMdpUser($name, $password);
-             $dao->envoyerMdp($name, $password);
-         }
-
-// ferme la connexion à MySQL
-unset($dao);
-
-// création du flux en sortie
-if ($lang == "xml")
-    creerFluxXML ($msg);
-    else
-        creerFluxJSON ($msg);
-        
-        // fin du programme (pour ne pas enchainer sur la fonction qui suit)
-        exit;
+// initialisation du nombre de réservations
+// Contrôle de la présence des paramètres
+if ( $nom == "" )
+{	$msg = "Erreur : données incomplètes.";
+}
+else
+{	// connexion du serveur web à la base MySQL ("include_once" peut être remplacé par "require_once")
+	include_once ('../modele/DAO.class.php');
+	$dao = new DAO();
+	
+	if ( $dao->getUtilisateur($nom) == "inconnu" )
+		$msg = "Erreur : nom d'utilisateur inexistant.";
+	else 
+	{	// mise à jour de la table mrbs_entry_digicode (si besoin) pour créer les digicodes manquants
+		$utilisateur=$dao->getUtilisateur($nom);
+		$mail=$utilisateur->getEmail();
+		$msg=$dao->envoyerMdp($mail);
+	}
+	// ferme la connexion à MySQL
+	unset($dao);
+}
+// création du flux XML en sortie
+creerFluxXML ($msg);
+// fin du programme (pour ne pas enchainer sur la fonction qui suit)
+exit;
         
         
         // création du flux XML en sortie
